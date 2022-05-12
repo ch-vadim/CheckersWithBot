@@ -21,6 +21,8 @@ class CheckersAppView: View(), BoardListener {
         var white = true //белые - человек
         var black = true //черные - человек
         var needToClose = false
+        var statusText = ""
+        var currentPlayer = CheckerColor.BLACK
     }
 
     private lateinit var status: Label
@@ -81,6 +83,11 @@ class CheckersAppView: View(), BoardListener {
             }
 
         }
+        statusText = when {
+            !black -> ("PVE (White): move")
+            !white -> ("PVE (Black): move")
+            else -> ("PVP: move")
+        }
         updateBoardAndStatus()
         if(!black) board.computerMove()
     }
@@ -110,11 +117,8 @@ class CheckersAppView: View(), BoardListener {
     }
     //обновление игрового поля
     private fun updateBoardAndStatus(cells: List<Cell> = listOf()) {
-        status.text = when {
-            !black -> ("PVE (White)")
-            !white -> ("PVE (Black)")
-            else -> ("PVP")
-        }
+        currentPlayer = board.currentPlayer
+        status.text = if (currentPlayer == CheckerColor.BLACK) "$statusText PURPLE" else "$statusText WHITE"
         for (cell in cells) {
             val imageName = getImage(cell.x, cell.y)
             buttons[cell]?.apply {

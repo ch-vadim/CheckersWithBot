@@ -4,7 +4,7 @@ import controller.BoardListener
 
 class Board constructor(private val width:Int = 8, private val height:Int = 8) {
     private val checkers: MutableMap<Cell, Checker?> = mutableMapOf() //все шашки на доске
-    private var currentPlayer = CheckerColor.BLACK //текущий игрок
+    var currentPlayer = CheckerColor.BLACK //текущий игрок
     private var isChoosen: Cell? = null //выбранная для хода шашка
     private var listener: BoardListener? = null
     private var comboAttack  = false //необходимость атаки более одной шашки подряд
